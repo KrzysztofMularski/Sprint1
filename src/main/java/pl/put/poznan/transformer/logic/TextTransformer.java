@@ -39,6 +39,9 @@ public class TextTransformer {
                 case "abbreviation_to_ab":
                     newText = abbreviation_to_ab(newText);
                     break;
+                case "latex":
+                    newText = latex(newText);
+                    break;
             }
         }
         return newText;
@@ -103,6 +106,15 @@ public class TextTransformer {
         replaceString = replaceString.replaceAll("\\bI tym podobne\\b","Itp.");
         replaceString = replaceString.replaceAll("\\bi tak dalej\\b","itd.");
         replaceString = replaceString.replaceAll("\\bI tak dalej\\b","Itd.");
+
+        return replaceString;
+    }
+
+    public String latex(String text){
+        String replaceString = text;
+
+        replaceString = replaceString.replaceAll("[$]","\\\\\\$");
+        replaceString = replaceString.replaceAll("[&]","\\\\\\&");
 
         return replaceString;
     }
