@@ -33,8 +33,11 @@ public class TextTransformer {
                 case "reverse":
                     newText = reverse(newText);
                     break;
-                case "shortcutExtended":
-                    newText = shortcutExtended(newText);
+                case "ab_to_abbreviation":
+                    newText = ab_to_abbreviation(newText);
+                    break;
+                case "abbreviation_to_ab":
+                    newText = abbreviation_to_ab(newText);
                     break;
             }
         }
@@ -72,7 +75,7 @@ public class TextTransformer {
         return output;
     }
 
-    public String shortcutExtended(String text){
+    public String ab_to_abbreviation(String text){
         String replaceString = text;
 
         replaceString = replaceString.replaceAll("\\bprof[.]\\B","profesor");
@@ -85,6 +88,23 @@ public class TextTransformer {
         replaceString = replaceString.replaceAll("\\bItp[.]\\B","I tym podobne");
         replaceString = replaceString.replaceAll("\\bitd[.]\\B","i tak dalej");
         replaceString = replaceString.replaceAll("\\bItd[.]\\B","I tak dalej");
+
+        return replaceString;
+    }
+
+    public String abbreviation_to_ab(String text){
+        String replaceString = text;
+
+        replaceString = replaceString.replaceAll("\\bprofesor\\b","prof.");
+        replaceString = replaceString.replaceAll("\\bProfesor\\b","Prof.");
+        replaceString = replaceString.replaceAll("\\bdoktor\\b","dr");
+        replaceString = replaceString.replaceAll("\\bDoktor\\b","Dr");
+        replaceString = replaceString.replaceAll("\\bna przykład\\b","np.");
+        replaceString = replaceString.replaceAll("\\bNa przykład\\b","Np.");
+        replaceString = replaceString.replaceAll("\\bi tym podobne\\b","itp.");
+        replaceString = replaceString.replaceAll("\\bI tym podobne\\b","Itp.");
+        replaceString = replaceString.replaceAll("\\bi tak dalej\\b","itd.");
+        replaceString = replaceString.replaceAll("\\bI tak dalej\\b","Itd.");
 
         return replaceString;
     }
