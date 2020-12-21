@@ -2,7 +2,6 @@ package pl.put.poznan.transformer.logic;
 
 import org.apache.commons.text.WordUtils;
 
-import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
@@ -41,6 +40,9 @@ public class TextTransformer {
                     break;
                 case "latex":
                     newText = latex(newText);
+                    break;
+                case "in_words":
+                    newText = in_words(newText);
                     break;
             }
         }
@@ -117,5 +119,102 @@ public class TextTransformer {
         replaceString = replaceString.replaceAll("[&]","\\\\\\&");
 
         return replaceString;
+    }
+
+    // 100 - sto
+    // 120 - sto dwadziescia
+
+    public String digitToString(int digit, int size)
+    {
+        String[] jednosci = {"", " jeden", " dwa", " trzy", " cztery", " pięć", " sześć", " siedem", " osiem", " dziewięć"};
+        String[] nascie = {"dziesięć", " jedenaście", " dwanaście", " trzynaście", " czternaście", " piętnaście", " szesnaście", " siedemnaście", " osiemnaście", " dziewiętnaście"};
+        String[] dziesiatki ={"", " dziesięć", " dwadzieścia", " trzydzieści", " czterdzieści", " pięćdziesiąt", " sześćdziesiąt", " siedemdziesiąt", " osiemdziesiąt", " dziewięćdziesiąt"};
+        String[] setki = {"", " sto", " dwieście", " trzysta", " czterysta", " pięćset", " sześćset", " siedemset", " osiemset", " dziewięćset"};
+
+        String result = "";
+
+        if (size == 1)
+            result = jednosci[digit];
+        else if (size == 10)
+            result =  nascie[digit];
+        else if (size == 20)
+            result = dziesiatki[digit];
+        else if (size == 100)
+            result = setki[digit];
+
+        return result;
+    }
+
+    public String intToWord(int numberInt)
+    {
+        int number = numberInt;
+        String result = "";
+
+        // 123 : sto dwadziescia trzy
+
+        if (number < 0) {
+            result += "minus";
+            number *= -1;
+        }
+
+        if (numberInt == 0) {
+            result += "zero ";
+        }
+
+        if (number == 1000)
+            result += "tysiac ";
+        if (number >= 100 && number <= 999) {
+            result += digitToString(number / 100, 100);
+            number %= 100;
+        }
+        if ((number >= 20 && number <= 99) || number==10) {
+            result += digitToString(number / 10, 20);
+            number %= 10;
+        }
+        else if (number >= 11 && number <= 19) {
+            result += digitToString(number / 10, 10);
+            number = 0;
+        }
+        if (number >= 1 && number <= 9) {
+            result += digitToString(number, 1);
+        }
+        result = result.trim();
+        return result;
+    }
+
+    public String in_words(String text) {
+        String result = "";
+        String[] newTextArr = text.split("\\s");
+        String regexDouble = "^-?\\d+([.,]\\d+)$";
+        String regexInt = "^-?\\d+";
+
+        for (String word : newTextArr) {
+            //zamiana na słowo
+            if (Pattern.matches(regexDouble, word)) {
+                String[] parts = word.split("[.,]");
+                if (parts[0].equals("-0")) {
+                    result += "minus ";
+                }
+                int part1 = Integer.parseInt(parts[0]);
+                int sizePoPrzecinku = parts[1].length();
+                int part2 = Integer.parseInt(parts[1]);
+                String newWord = intToWord(part1);
+                newWord += " i ";
+                newWord += intToWord(part2);
+                if (sizePoPrzecinku == 1)
+                    newWord += " dziesiąte";
+                else if (sizePoPrzecinku == 2)
+                    newWord += " setne";
+                result += newWord;
+            } else if (Pattern.matches(regexInt, word)) {
+                int numberInt = Integer.parseInt(word);
+                String newWord = intToWord(numberInt);
+                result += newWord;
+            } else {
+                result += word;
+            }
+            result += " ";
+        }
+        return result;
     }
 }
