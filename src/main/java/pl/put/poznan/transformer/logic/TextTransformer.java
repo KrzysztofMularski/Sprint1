@@ -1,9 +1,9 @@
 package pl.put.poznan.transformer.logic;
 
-import com.sun.org.apache.bcel.internal.generic.SWITCH;
 import org.apache.commons.text.WordUtils;
 
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 /**
  * This is just an example to show that the logic should be outside the REST service.
@@ -32,6 +32,9 @@ public class TextTransformer {
                     break;
                 case "reverse":
                     newText = reverse(newText);
+                    break;
+                case "shortcutExtended":
+                    newText = shortcutExtended(newText);
                     break;
             }
         }
@@ -67,5 +70,22 @@ public class TextTransformer {
         }
 
         return output;
+    }
+
+    public String shortcutExtended(String text){
+        String replaceString = text;
+
+        replaceString = replaceString.replaceAll("\\bprof[.]\\B","profesor");
+        replaceString = replaceString.replaceAll("\\bProf[.]\\B","Profesor");
+        replaceString = replaceString.replaceAll("\\bdr\\b","doktor");
+        replaceString = replaceString.replaceAll("\\bDr\\b","Doktor");
+        replaceString = replaceString.replaceAll("\\bnp[.]\\B","na przykład");
+        replaceString = replaceString.replaceAll("\\bNp[.]\\B","Na przykład");
+        replaceString = replaceString.replaceAll("\\bitp[.]\\B","i tym podobne");
+        replaceString = replaceString.replaceAll("\\bItp[.]\\B","I tym podobne");
+        replaceString = replaceString.replaceAll("\\bitd[.]\\B","i tak dalej");
+        replaceString = replaceString.replaceAll("\\bItd[.]\\B","I tak dalej");
+
+        return replaceString;
     }
 }
