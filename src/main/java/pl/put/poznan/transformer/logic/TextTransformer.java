@@ -95,10 +95,8 @@ public class TextTransformer {
     public String abbreviation_to_ab(String text){
         String replaceString = text;
 
-        replaceString = replaceString.replaceAll("\\bprofesor\\b","prof.");
-        replaceString = replaceString.replaceAll("\\bProfesor\\b","Prof.");
-        replaceString = replaceString.replaceAll("\\bdoktor\\b","dr");
-        replaceString = replaceString.replaceAll("\\bDoktor\\b","Dr");
+        replaceString = replaceString.replaceAll("\\bmiędzy innymi\\b","m.in.");
+        replaceString = replaceString.replaceAll("\\bMiędzy innymi\\b","M.in.");
         replaceString = replaceString.replaceAll("\\bna przykład\\b","np.");
         replaceString = replaceString.replaceAll("\\bNa przykład\\b","Np.");
         replaceString = replaceString.replaceAll("\\bi tym podobne\\b","itp.");
