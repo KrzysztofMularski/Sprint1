@@ -7,13 +7,22 @@ import pl.put.poznan.transformer.logic.TextTransformer;
 
 import java.util.Arrays;
 
-
+/**
+ * Class which controls whole logic part of application
+ */
 @RestController
 public class TextTransformerController {
 
     private static final Logger logger = LoggerFactory.getLogger(TextTransformerController.class);
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+    /**
+     * Transforms user-defined text according to transformations
+     *
+     * @param text Text to be transformed
+     * @param transforms Array of transformations
+     * @return
+     */
     public String post(@RequestBody String text,
                        @RequestParam String[] transforms) {
 

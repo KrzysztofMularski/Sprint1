@@ -5,16 +5,27 @@ import org.apache.commons.text.WordUtils;
 import java.util.regex.Pattern;
 
 /**
- * This is just an example to show that the logic should be outside the REST service.
+ * Class which contains all the logic for TextTransformer project
  */
 public class TextTransformer {
 
     private final String[] transforms;
 
+    /**
+     * Constructor
+     *
+     * @param transforms contains all transformations that user put to transform his text
+     */
     public TextTransformer(String[] transforms){
         this.transforms = transforms;
     }
 
+    /**
+     * This function transforms text according to transformations in transform array
+     *
+     * @param text Text which is transformed
+     * @return Transformed text according to all transformations
+     */
     public String transform(String text){
         String newText = text;
         // of course, normally it would do something based on the transforms
@@ -49,19 +60,43 @@ public class TextTransformer {
         return newText;
     }
 
+    /**
+     * Converts string value to uppercase
+     *
+     * @param text Text which is transformed
+     * @return Transformed text
+     */
     public String upper(String text){
         // of course, normally it would do something based on the transforms
         return text.toUpperCase();
     }
 
+    /**
+     * Converts string value to lowercase
+     *
+     * @param text Text which is transformed
+     * @return Transformed text
+     */
     public String lower(String text){
         return text.toLowerCase();
     }
 
+    /**
+     * Converts all the whitespace separated words in a String into capitalized words
+     *
+     * @param text Text which is transformed
+     * @return Transformed text
+     */
     public String capitalize(String text){
         return WordUtils.capitalizeFully(text);
     }
 
+    /**
+     * Reverses the text maintaining capitalized letters' positions
+     *
+     * @param text Text which is transformed
+     * @return Transformed text
+     */
     public String reverse(String text) {
         boolean[] upperCase = new boolean[text.length()];
 
@@ -80,6 +115,12 @@ public class TextTransformer {
         return output;
     }
 
+    /**
+     * Changes abbreviation to full words in string
+     *
+     * @param text String with text to transform
+     * @return String with transformed text
+     */
     public String ab_to_abbreviation(String text){
         String replaceString = text;
 
@@ -97,6 +138,12 @@ public class TextTransformer {
         return replaceString;
     }
 
+    /**
+     * Changes full words to abbreviation in string
+     *
+     * @param text String with text to transform
+     * @return String with transformed text
+     */
     public String abbreviation_to_ab(String text){
         String replaceString = text;
 
@@ -112,6 +159,12 @@ public class TextTransformer {
         return replaceString;
     }
 
+    /**
+     * Prepares given text to Latex
+     *
+     * @param text String with text to transform
+     * @return String with transformed text
+     */
     public String latex(String text){
         String replaceString = text;
 
@@ -121,9 +174,13 @@ public class TextTransformer {
         return replaceString;
     }
 
-    // 100 - sto
-    // 120 - sto dwadziescia
-
+    /**
+     * Class intToWord helper, converting a digit integer to a word-digit String
+     *
+     * @param digit Digit to be transformed
+     * @param size Helps recognize which order of magnitude is the digit parameter
+     * @return Digit in word-string format
+     */
     public String digitToString(int digit, int size)
     {
         String[] jednosci = {"", " jeden", " dwa", " trzy", " cztery", " pięć", " sześć", " siedem", " osiem", " dziewięć"};
@@ -145,6 +202,12 @@ public class TextTransformer {
         return result;
     }
 
+    /**
+     * Changes int to word-string, in_words helper
+     *
+     * @param numberInt Integer to change
+     * @return Integer in word-string format
+     */
     public String intToWord(int numberInt)
     {
         int number = numberInt;
@@ -182,6 +245,12 @@ public class TextTransformer {
         return result;
     }
 
+    /**
+     * Changes numbers written with letters to written with digits
+     *
+     * @param text String with text to transform
+     * @return String with transformed text
+     */
     public String in_words(String text) {
         String result = "";
         String[] newTextArr = text.split("\\s");
