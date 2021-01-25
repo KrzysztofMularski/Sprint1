@@ -55,6 +55,9 @@ public class TextTransformer {
                 case "in_words":
                     newText = in_words(newText);
                     break;
+                case "repeats":
+                    newText = repeats(newText);
+                    break;
             }
         }
         return newText;
@@ -285,5 +288,32 @@ public class TextTransformer {
             result += " ";
         }
         return result;
+    }
+
+    public String repeats(String text){
+        String[] newTextArr = text.split(" ");
+        String now;
+        String result = "";
+        int i = 0;
+        int j;
+
+        while(i < newTextArr.length){
+            now = newTextArr[i];
+            if(i < newTextArr.length - 1) {
+                j = i + 1;
+
+                while(j < newTextArr.length) {
+                    if (now.compareTo(newTextArr[j]) == 0)
+                        i = j;
+                    j++;
+                }
+                result += now + " ";
+            }
+            else
+                result += now;
+            i++;
+        }
+
+        return result.trim();
     }
 }
