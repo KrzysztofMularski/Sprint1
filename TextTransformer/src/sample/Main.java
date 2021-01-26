@@ -56,7 +56,7 @@ public class Main extends Application {
         send.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e){
-                String urlAddress = url.getText().toString();
+                String urlAddress = urlText.getText().toString();
                 String charset = "UTF-8";
                 String params1 = params.getText().toString();
 
