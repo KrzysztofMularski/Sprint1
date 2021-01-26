@@ -290,6 +290,12 @@ public class TextTransformer {
         return result;
     }
 
+    /**
+     * Deletes repeating words
+     *
+     * @param text String with text to transform
+     * @return String with transformed text
+     */
     public String repeats(String text){
         String[] newTextArr = text.split(" ");
         String now;
