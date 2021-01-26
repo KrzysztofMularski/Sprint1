@@ -8,7 +8,7 @@ public class TextTransformerControllerTest {
 
     public String testPost() {
         String text = "test";
-        String[] transforms = ["upper"];
+        String[] transforms = {"upper"};
         String resulttext = "TEST";
         when(transformer.transform(text)).thenReturn(resulttext);
         TextTransformerController controller = new TextTransformerController(transformer);
