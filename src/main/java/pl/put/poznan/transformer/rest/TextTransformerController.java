@@ -13,6 +13,18 @@ import java.util.Arrays;
 @RestController
 public class TextTransformerController {
 
+    int transformerPresent;
+    TextTransformer transformer;
+
+    public TextTransformerController(TextTransformer trans){
+        this.transformerPresent = 1;
+        transformer = trans;
+
+    }
+    public TextTransformerController(){
+        this.transformerPresent = 0;
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(TextTransformerController.class);
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -31,7 +43,9 @@ public class TextTransformerController {
         logger.debug(Arrays.toString(transforms));
 
         // perform the transformation, you should run your logic here, below is just a silly example
-        TextTransformer transformer = new TextTransformer(transforms);
+        if (this.transformerPresent == 0){
+            transformer = new TextTransformer(transforms);
+        }
         return transformer.transform(text);
     }
 
