@@ -56,6 +56,9 @@ public class Main extends Application {
         send.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e){
+                String urlAddress = url.getText().toString();
+                String charset = "UTF-8";
+                String params1 = params.getText().toString();
 
             try {
                 URL url = new URL("http://" + urlText.getText()+"/?transforms=" + params.getText());
@@ -69,12 +72,6 @@ public class Main extends Application {
                 OutputStream os = conn.getOutputStream();
                 os.write(input.getBytes());
                 os.flush();
-                /*
-                if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                    throw new RuntimeException("Failed : HTTP error code : "
-                            + conn.getResponseCode());
-                }
-                */
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
                 String output;
