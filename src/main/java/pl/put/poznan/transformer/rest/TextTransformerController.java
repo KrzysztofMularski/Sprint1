@@ -18,6 +18,7 @@ public class TextTransformerController {
 
     public TextTransformerController(TextTransformer trans){
         this.transformerPresent = 1;
+        transformer = trans;
 
     }
     public TextTransformerController(){
