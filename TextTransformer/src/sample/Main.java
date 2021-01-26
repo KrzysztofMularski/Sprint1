@@ -10,12 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.*;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class Main extends Application {
@@ -32,16 +28,17 @@ public class Main extends Application {
 
         final ComboBox<String> restBox = new ComboBox<String>();
         restBox.getItems().addAll(
-                "POST",
-                "GET"
+                "POST"
         );
         restBox.setValue("POST");
 
-        TextField url = new TextField();
+        TextField urlText = new TextField();
+        urlText.setText("localhost:8080");
 
         Button send = new Button("Send");
 
         TextArea body = new TextArea();
+        body.setText("Dzień dobry");
 
         TextArea result = new TextArea();
 
@@ -49,42 +46,55 @@ public class Main extends Application {
         label1.setText("Parameters:");
 
         TextField params = new TextField();
+        params.setText("upper,reverse");
 
-        url.setPromptText("Enter request URL");
+        urlText.setPromptText("Enter request URL");
 
         result.setEditable(false);
+
 
         send.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e){
-                result.setText("EHLLOO");
 
-                String urlAddress = url.getText().toString();
-                String charset = "UTF-8";
-                String params1 = params.getText().toString();
+            try {
+                URL url = new URL("http://" + urlText.getText()+"/?transforms=" + params.getText());
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setDoOutput(true);
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
 
-                String query = null;
-                try {
-                    query = String.format("transforms=%s", URLEncoder.encode(params1, charset));
-                } catch (UnsupportedEncodingException unsupportedEncodingException) {
-                    unsupportedEncodingException.printStackTrace();
+                String input = body.getText();
+
+                OutputStream os = conn.getOutputStream();
+                os.write(input.getBytes());
+                os.flush();
+                /*
+                if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+                    throw new RuntimeException("Failed : HTTP error code : "
+                            + conn.getResponseCode());
                 }
-                URLConnection connection = null;
-                try {
-                    connection = new URL(urlAddress + "?" + query).openConnection();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                */
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                String output;
+                System.out.println("Output from Server .... \n");
+                String resultText = "";
+                while ((output = br.readLine()) != null) {
+                    resultText = resultText + output;
+                    result.setText(resultText);
                 }
-                connection.setRequestProperty("Accept-Charset", charset);
-                if ( connection instanceof HttpURLConnection)
-                {
-                    HttpURLConnection httpConnection = (HttpURLConnection) connection;
-                    try {
-                        result.setText(httpConnection.getResponseMessage().toString());
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
+
+                conn.disconnect();
+                } catch (MalformedURLException ex) {
+
+                ex.printStackTrace();
+
+                } catch (IOException ex) {
+
+                ex.printStackTrace();
                 }
+
             }
         });
 
@@ -93,7 +103,7 @@ public class Main extends Application {
         grid.setHgap(10);
         grid.setPadding(new Insets(5,5,5,5));
         grid.add(restBox,0,0);
-        grid.add(url,1,0, 2, 1);
+        grid.add(urlText,1,0, 2, 1);
         grid.add(send,3,0);
         grid.add(label1, 0, 1);
         grid.add(params, 1, 1);
