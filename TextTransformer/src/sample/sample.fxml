@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="sample.Controller">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <AnchorPane prefHeight="600.0" prefWidth="600.0">
+         <children>
+            <TextArea layoutX="10.0" layoutY="322.0" prefHeight="264.0" prefWidth="579.0" />
+            <TextField layoutX="119.0" layoutY="14.0" prefHeight="26.0" prefWidth="404.0" promptText="Enter request URL" />
+            <TextArea layoutX="10.0" layoutY="55.0" prefHeight="254.0" prefWidth="579.0" />
+            <ComboBox layoutX="10.0" layoutY="14.0" prefHeight="26.0" prefWidth="106.0" />
+            <Button layoutX="527.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" text="Send" />
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>
