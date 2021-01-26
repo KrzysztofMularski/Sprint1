@@ -287,7 +287,7 @@ public class TextTransformer {
             }
             result += " ";
         }
-        return result;
+        return result.trim();
     }
 
     /**
